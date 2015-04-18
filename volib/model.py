@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 __author__ = 'olaurino'
 
 __all__ = ['Enum', 'Enumeration', 'DataType', 'Attribute', 'Collection', 'Reference', 'ValueType', 'ObjectType']
@@ -31,14 +33,14 @@ class ReferencableMeta(type):
 >>> class MyClass(MyReferencable):
 ...     pass
 ...
->>> print MyReferencable.vodml_id
+>>> print(MyReferencable.vodml_id)
 MyReferencable
->>> print MyClass.vodml_id
+>>> print(MyClass.vodml_id)
 MyClass
 >>> class MyOtherClass(MyReferencable):
 ...     vodml_id = 'myid'
 ...
->>> print MyOtherClass.vodml_id
+>>> print(MyOtherClass.vodml_id)
 myid
     """
 
@@ -76,7 +78,7 @@ class Attribute(Role):
 <class '....Enum'>
 >>> obj.attr.value
 'star'
->>> print obj.attr
+>>> print(obj.attr)
 star
 >>> del obj.attr
 >>> type(obj.attr)
@@ -145,15 +147,15 @@ TypeError: Wrong value for Enum Classification. Valid values: Classification.STA
 >>> l = Collection(QsoType, multiplicity=(2,2))
 >>> len(l)
 2
->>> print l
+>>> print(l)
 [None, None]
 >>> l[0] = QsoType.BLAZAR
->>> print l[0]
+>>> print(l[0])
 blazar
 >>> l = Collection(Classification, multiplicity=(2,2), default=(Classification.STAR, 'galaxy'))
->>> print l[0]
+>>> print(l[0])
 star
->>> print l[1]
+>>> print(l[1])
 galaxy
 >>> len(l)
 2
