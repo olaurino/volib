@@ -7,7 +7,7 @@ packages=find_packages(),
 entry_points="""
 [vodml.resolver]
 {% for model in models -%}
-{{ model[0] }},{{ model[1] }}={{ meta.name|alpha }}.{{ model[0]|alpha }}_{{ model[1]|alpha }}.aux:resolver
+{{ model[0] }},{{ model[1] }}={{ meta.name|alpha }}.{{ model[0]|alpha }}_{{ model[1]|alpha }}.__aux__:resolver
 {% endfor -%}
 """,
 )

@@ -143,8 +143,8 @@ def generate_code(model_urls, pkg_metadata, basedir, overwrite=True, write_deps=
 ...     name = 'reference'
 ...     version = '1.0'
 >>> m = MetaData()
->>> basedir = os.path.dirname(os.path.abspath(volib.__file__))
->>> os.chdir(os.path.join(basedir, "..", "other"))
+>>> basedir = os.path.dirname(volib.resources.__file__)
+>>> os.chdir(basedir)
 >>> generate_code(['file:ReferenceDM-1.0.vodml.xml',], m, 'output', write_deps=True)
 
 

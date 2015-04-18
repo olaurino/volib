@@ -1,0 +1,6 @@
+pyxb==1.2.3
+networkx
+furl
+jinja2
+pytest-cov
+
