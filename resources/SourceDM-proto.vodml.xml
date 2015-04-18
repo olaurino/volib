@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vo-dml:model xmlns:vo-dml="http://volute.googlecode.com/dm/vo-dml/v0.9">
+    <name>src</name>
+    <description>This is a sample data model. It contains the IVOA UML Profile and imports the IVOA_Profile data model
+        with primitive types.
+        It has some sample relationships etc to be used in documentation etc.
+    </description>
+    <title>Sample VO-DML data model.</title>
+
+    <version>proto</version>
+    <lastModified>2013-05-09T16:28:25</lastModified>
+    <import>
+        <name>ivoa</name>
+        <version>proto</version>
+        <url>file:IVOA-proto.vodml.xml</url>
+        <documentationURL>http://volute.googlecode.com/svn/trunk/projects/dm/vo-dml/models/ivoa/IVOA.html
+        </documentationURL>
+    </import>
+    <import>
+        <name>photdm</name>
+        <version>proto</version>
+        <url>file:PhotDM-proto.vodml.xml</url>
+        <documentationURL>https://volute.googlecode.com/svn/trunk/projects/dm/vo-dml/models/photdm/photdm.html
+        </documentationURL>
+    </import>
+    <import>
+        <name>stc</name>
+        <version>proto</version>
+        <url>file:STC-proto.vodml.xml</url>
+        <documentationURL>https://volute.googlecode.com/svn/trunk/projects/dm/vo-dml/models/ivoa/IVOA.html
+        </documentationURL>
+    </import>
+    <package>
+        <vodml-id>source</vodml-id>
+        <name>source</name>
+        <description>
+            Source Package.
+        </description>
+        <objectType>
+            <vodml-id>source.LuminosityMeasurement</vodml-id>
+            <name>LuminosityMeasurement</name>
+            <description>
+                A Luminosity Measurement, i.e. a magnitude or a flux.
+            </description>
+            <attribute>
+                <vodml-id>source.LuminosityMeasurement.name</vodml-id>
+                <name>name</name>
+                <description>
+                    The name of the measurement, or most likely of the band, that can be used by displays to
+                    very briefly identify the measurement (e.g. 'sdss.g')
+                </description>
+                <datatype>
+                    <utype>ivoa:string</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.LuminosityMeasurement.value</vodml-id>
+                <name>value</name>
+                <description>
+                    The value of the measurement. This is an IVOA RealQuantity, meaning that it has a value, a UCD, a
+                    unit string, and so on.
+                </description>
+                <datatype>
+                    <utype>ivoa:quantity.RealQuantity</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>1</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.LuminosityMeasurement.error</vodml-id>
+                <name>error</name>
+                <description>
+                    The error of this measurement.
+                </description>
+                <datatype>
+                    <utype>ivoa:quantity.RealQuantity</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.LuminosityMeasurement.description</vodml-id>
+                <name>description</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+                <datatype>
+                    <utype>ivoa:string</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.LuminosityMeasurement.type</vodml-id>
+                <name>type</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+                <datatype>
+                    <utype>src:source.LuminosityType</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>1</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <reference>
+                <vodml-id>source.LuminosityMeasurement.filter</vodml-id>
+                <name>filter</name>
+                <description>
+                    The passband for this measurement.
+                </description>
+                <datatype>
+                    <utype>photdm:PhotometryFilter</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>1</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </reference>
+        </objectType>
+
+        <objectType>
+            <vodml-id>source.Source</vodml-id>
+            <name>Source</name>
+            <description>
+                Class representing astronomical sources.
+            </description>
+            <extends>
+                <utype>src:source.AstroObject</utype>
+            </extends>
+            <attribute>
+                <vodml-id>source.Source.name</vodml-id>
+                <name>name</name>
+                <description>
+                    The designation of the source.
+                </description>
+                <datatype>
+                    <utype>ivoa:string</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>1</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.Source.description</vodml-id>
+                <name>description</name>
+                <description>
+                    A description of the source.
+                </description>
+                <datatype>
+                    <utype>ivoa:string</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.Source.position</vodml-id>
+                <name>position</name>
+                <description>
+                    The coordinate of the source in the sky.
+                </description>
+                <datatype>
+                    <utype>stc:SkyCoordinate</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>1</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.Source.positionError</vodml-id>
+                <name>positionError</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+                <datatype>
+                    <utype>stc:SkyError</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <attribute>
+                <vodml-id>source.Source.classification</vodml-id>
+                <name>classification</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+                <datatype>
+                    <utype>src:source.SourceClassification</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>1</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+            </attribute>
+            <collection>
+                <vodml-id>source.Source.luminosities</vodml-id>
+                <name>luminosities</name>
+                <description>
+                    Collection of luminosity measurement available for the source.
+                </description>
+                <datatype>
+                    <utype>src:source.LuminosityMeasurement</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>-1</maxOccurs>
+                </multiplicity>
+                <!-- <elementName>luminosity</elementName> -->
+            </collection>
+        </objectType>
+
+        <objectType abstract="true">
+            <vodml-id>source.AstroObject</vodml-id>
+            <name>AstroObject</name>
+            <description>Generic base class for all astronomical objects.</description>
+            <attribute>
+                <vodml-id>source.AstroObject.label</vodml-id>
+                <name>label</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+                <datatype>
+                    <utype>ivoa:string</utype>
+                </datatype>
+                <multiplicity>
+                    <minOccurs>0</minOccurs>
+                    <maxOccurs>1</maxOccurs>
+                </multiplicity>
+                <skosconcept>
+                    <broadestSKOSConcept>http://purl.org/astronomy/vocab/DataObjectTypes/DataObjectType
+                    </broadestSKOSConcept>
+                    <vocabularyURI>http://purl.org/astronomy/vocab/DataObjectTypes</vocabularyURI>
+                </skosconcept>
+            </attribute>
+        </objectType>
+
+        <enumeration>
+            <vodml-id>source.SourceClassification</vodml-id>
+            <name>SourceClassification</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <literal>
+                <vodml-id>source.SourceClassification.star</vodml-id>
+                <name>star</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+            <literal>
+                <vodml-id>source.SourceClassification.galaxy</vodml-id>
+                <name>galaxy</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+            <literal>
+                <vodml-id>source.SourceClassification.AGN</vodml-id>
+                <name>AGN</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+            <literal>
+                <vodml-id>source.SourceClassification.planet</vodml-id>
+                <name>planet</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+            <literal>
+                <vodml-id>source.SourceClassification.unknown</vodml-id>
+                <name>unknown</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+        </enumeration>
+
+        <enumeration>
+            <vodml-id>source.LuminosityType</vodml-id>
+            <name>LuminosityType</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <literal>
+                <vodml-id>source.LuminosityType.magnitude</vodml-id>
+                <name>magnitude</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+            <literal>
+                <vodml-id>source.LuminosityType.flux</vodml-id>
+                <name>flux</name>
+                <description>
+                    TODO : Missing description : please, update your UML model asap.
+                </description>
+            </literal>
+        </enumeration>
+
+    </package>
+    <objectType>
+        <vodml-id>Catalog</vodml-id>
+        <name>Catalog</name>
+        <description>A Catalog of Sources</description>
+        <attribute>
+            <vodml-id>Catalog.name</vodml-id>
+            <name>name</name>
+            <description>
+                Catalog's designation
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>Catalog.description</vodml-id>
+            <name>description</name>
+            <description>
+                Catalog's description
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <collection>
+            <vodml-id>Catalog.sources</vodml-id>
+            <name>sources</name>
+            <description>
+                Set of sources contained in the catalog.
+            </description>
+            <datatype>
+                <utype>src:source.Source</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>-1</maxOccurs>
+            </multiplicity>
+        </collection>
+    </objectType>
+
+</vo-dml:model>

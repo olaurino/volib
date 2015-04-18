@@ -1,0 +1,58 @@
+{% macro attr(attribute, name, multiplicity, meta) -%}
+{{ attribute.name }} = {{ name }}({{ attribute.datatype.utype|resolve(meta, instance) }},
+                    '{{ attribute.vodml_id }}',
+    {% if multiplicity != '' %}
+                    multiplicity=({{ attribute.multiplicity.minOccurs }}, {{ attribute.multiplicity.maxOccurs }}),
+    {% endif %}
+                    doc="""{{ attribute.description|replace('\n',' ')|regex_replace('\s+', ' ')|trim|wordwrap }}""")
+{% endmacro %}
+
+{% macro attrtype(thetype, name, classname, max_multi) %}
+    {% for attribute in thetype[name] %}
+        {% if attribute.multiplicity.maxOccurs == max_multi %}
+{{ attr(attribute, classname, '', meta) }}
+        {% else %}
+{{ attr(attribute, classname, 'yes', meta) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro classes(thetype, parent) %}
+{% for thetype in instance[thetype] %}
+    {% if thetype.extends %}
+        {% set extends = thetype.extends.utype|resolve(meta, instance) %}
+    {% else %}
+        {% set extends = parent %}
+    {% endif %}
+
+class {{ thetype.name }}({{ extends }}):
+    vodml_id = '{{ thetype.vodml_id }}'
+
+    {{ attrtype(thetype, 'attribute', 'Attribute', 1)|indent }}
+    {{ attrtype(thetype, 'reference', 'Reference', 1)|indent }}
+    {{ attrtype(thetype, 'collection', 'Collection', -1)|indent }}
+
+{% endfor %}
+{% endmacro %}
+
+from volib.model import *
+{% for import in meta.import_ %}
+{{ import|resolve_import }}
+{% endfor %}
+{% for pkg in instance.package %}
+import {{ pkg.name|alpha }}
+{% endfor %}
+
+
+{% for enumer in instance.enumeration %}
+class {{ enumer.name }}(Enumeration):
+    {% for attr in enumer.literal %}
+        {{ attr.name|upper }} = Enum('{{ attr.name }}')
+    {% endfor %}
+
+
+{% endfor %}
+
+{{ classes('dataType', 'DataType') }}
+
+{{ classes('objectType', 'ObjectType') }}

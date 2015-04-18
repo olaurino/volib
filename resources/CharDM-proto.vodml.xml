@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vo-dml:model xmlns:vo-dml="http://volute.googlecode.com/dm/vo-dml/v0.9">
+    <name>char</name>
+    <description>A prototype of the Characterization DM</description>
+    <title>Characterization DM</title>
+    <author>Gerard Lemson</author>
+    <author>Laurent Bourges</author>
+    <version>proto</version>
+    <lastModified>2013-05-08T16:45:32</lastModified>
+    <import>
+        <name>ivoa</name>
+        <version>proto</version>
+        <url>file:IVOA-proto.vodml.xml</url>
+        <documentationURL>http://volute.googlecode.com/svn/trunk/projects/dm/vo-dml/models/ivoa/IVOA.html
+        </documentationURL>
+    </import>
+    <objectType>
+        <vodml-id>Access</vodml-id>
+        <name>Access</name>
+        <description>
+            TODO : Missing description : please, update your UML model asap.
+        </description>
+        <attribute>
+            <vodml-id>Access.reference</vodml-id>
+            <name>reference</name>
+            <description>uri to the effective transmission curve
+                NB this description applies to the inherited access atttribute on TransmissionCurve, not really to the
+                one on the base class.
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>Access.format</vodml-id>
+            <name>format</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>Access.size</vodml-id>
+            <name>size</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:nonnegativeInteger</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </objectType>
+
+
+    <dataType>
+        <vodml-id>Bounds</vodml-id>
+        <name>Bounds</name>
+        <description>Could be datatype</description>
+        <attribute>
+            <vodml-id>Bounds.extent</vodml-id>
+            <name>extent</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:quantity.RealQuantity</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>Bounds.start</vodml-id>
+            <name>start</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:quantity.RealQuantity</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>Bounds.stop</vodml-id>
+            <name>stop</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:quantity.RealQuantity</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </dataType>
+    <dataType>
+        <vodml-id>Location</vodml-id>
+        <name>Location</name>
+        <description>Could be datatype</description>
+        <attribute>
+            <vodml-id>Location.value</vodml-id>
+            <name>extent</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:quantity.RealQuantity</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </dataType>
+    <dataType>
+        <vodml-id>Coverage</vodml-id>
+        <name>Coverage</name>
+        <description>Could be datatype</description>
+        <attribute>
+            <vodml-id>Coverage.location</vodml-id>
+            <name>extent</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>char:Location</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>Coverage.bounds</vodml-id>
+            <name>start</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>char:Bounds</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </dataType>
+</vo-dml:model>

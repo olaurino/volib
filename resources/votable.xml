@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<VOTABLE version="1.2"
+         xmlns="http://www.ivoa.net/xml/VOTable/v1.2">
+    <!-- VODML PREAMBLE. MUST BE DIRECT CHILD OF VOTABLE -->
+    <!-- NOTE: VO-DML UTYPES (vo-dml:*) ONLY PERTAIN TO SERIALIZATION, NOT TO MODEL DEFINITION -->
+    <GROUP utype="vo-dml:Model">
+        <PARAM utype="vo-dml:Model.name" value="ref" datatype="char" arraysize="*" name="name"/>
+        <PARAM utype="vo-dml:Model.version" value="1.0" datatype="char" arraysize="*" name="version"/>
+        <PARAM utype="vo-dml:Model.url" value="file:ReferenceDM-1.0.vodml.xml" datatype="char" arraysize="*"
+               name="url"/>
+    </GROUP>
+    <GROUP utype="vo-dml:Model">
+        <PARAM utype="vo-dml:Model.name" value="ivoa" datatype="char" arraysize="*" name="name"/>
+        <PARAM utype="vo-dml:Model.version" value="1.0" datatype="char" arraysize="*" name="version"/>
+        <PARAM utype="vo-dml:Model.url" value="file:IVOA-1.0.vodml.xml" datatype="char" arraysize="*" name="url"/>
+    </GROUP>
+
+    <PARAM ID="J2000" value="J2000" datatype="char" arraysize="*" name="j2000"/>
+
+    <RESOURCE>
+        <!-- DataType to GROUP in RESOURCE -->
+        <GROUP utype="vo-dml:Instance.root" ID="_icrs">
+            <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyCoordinateFrame" datatype="char"
+                   arraysize="*" name="type"/>
+            <!-- Attribute to PARAM -->
+            <PARAM utype="ref:source.stc.SkyCoordinateFrame.name" value="ICRS" datatype="char" arraysize="*"
+                   name="name"/>
+            <!-- Attribute to PARAMref -->
+            <PARAMref utype="ref:source.stc.SkyCoordinateFrame.equinox" ref="J2000"/>
+        </GROUP>
+
+        <!-- DataType to GROUP in RESOURCE -->
+        <GROUP utype="vo-dml:Instance.root">
+            <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyCoordinate" datatype="char" arraysize="*"
+                   name="type"/>
+            <PARAM name="ra" utype="ref:source.stc.SkyCoordinate.longitude" value="123.00000" datatype="float"/>
+            <PARAM name="dec" utype="ref:source.stc.SkyCoordinate.latitude" value="-2.10000" datatype="float"/>
+            <!-- Attribute to GROUPref -->
+            <GROUP ref="_icrs" utype="ref:source.stc.SkyCoordinate.frame"/>
+        </GROUP>
+
+        <!-- ObjectType to GROUP in RESOURCE -->
+        <!-- Collection (Composition) Container -->
+        <GROUP utype="vo-dml:Instance.root">
+            <PARAM utype="vo-dml:Instance.type" value="ref:Catalog" datatype="char" arraysize="*" name="type"/>
+            <PARAM utype="ref:Catalog.name" value="My Catalog" datatype="char" arraysize="*" name="name"/>
+            <PARAM utype="ref:Catalog.description" value="My Description" datatype="char" arraysize="*"
+                   name="description"/>
+            <GROUP ID="CATALOG" utype="ref:Catalog.sources">
+                <PARAM utype="vo-dml:Instance.type" value="vo-dml:collection.Container" datatype="char" arraysize="*"
+                       name="type"/>
+                <GROUP ref="SOURCE" utype="vo-dml:collection.Container.itemID"/>
+            </GROUP>
+        </GROUP>
+
+        <GROUP ID="_error">
+            <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.CircleError" datatype="char" arraysize="*"
+                   name="type"/>
+            <!-- Inheritance, although for extensions in the same model parent might be omitted -->
+            <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyError" datatype="char" arraysize="*"
+                   name="type"/>
+            <FIELDref ref="_error_radius" utype="ref:source.stc.CircleError.radius" />
+        </GROUP>
+
+        <TABLE>
+            <GROUP utype="vo-dml:Instance.root" ID="SOURCE">
+                <PARAM utype="vo-dml:Instance.type" value="ref:source.Source" datatype="char" arraysize="*"
+                       name="type"/>
+                <!-- Collection (Composition) Contained TODO Container may Probably be ignored for the time being -->
+                <GROUP ref="CATALOG" utype="vo-dml:collection.Container.ID"/>
+                <FIELDref ref="_designation" utype="ref:source.Source.name"/>
+                <!-- Attribute to GROUP in GROUP -->
+                <GROUP utype="ref:source.Source.position">
+                    <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyCoordinate" datatype="char"
+                           arraysize="*"
+                           name="type"/>
+                    <FIELDref ref="_ra" utype="ref:source.stc.SkyCoordinate.longitude"/>
+                    <FIELDref ref="_dec" utype="ref:source.stc.SkyCoordinate.latitude"/>
+                    <GROUP ref="_icrs" utype="ref:source.stc.SkyCoordinate.frame"/>
+                    <!-- Reference to ObjectType -->
+                    <GROUP ref="_error" utype="ref:source.stc.SkyCoordinate.error"/>
+                </GROUP>
+            </GROUP>
+            <FIELD ID="_designation" datatype="char" name="name" arraysize="*"/>
+            <FIELD ID="_ra" datatype="float" name="ra"/>
+            <FIELD ID="_dec" datatype="float" name="dec"/>
+            <FIELD ID="_error_radius" datatype="float" arraysize="*" name="radius"/>
+            <DATA>
+                <TABLEDATA>
+                    <TR>
+                        <TD>SOURCE_1</TD>
+                        <TD>1.0</TD>
+                        <TD>1.1</TD>
+                        <TD>0.1</TD>
+                    </TR>
+                    <TR>
+                        <TD>SOURCE_2</TD>
+                        <TD>2.0</TD>
+                        <TD>2.1</TD>
+                        <TD>0.2</TD>
+                    </TR>
+                    <TR>
+                        <TD>SOURCE_3</TD>
+                        <TD>3.0</TD>
+                        <TD>3.1</TD>
+                        <TD>0.3</TD>
+                    </TR>
+                </TABLEDATA>
+            </DATA>
+        </TABLE>
+    </RESOURCE>
+</VOTABLE>

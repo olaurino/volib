@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vo-dml:model xmlns:vo-dml="http://volute.googlecode.com/dm/vo-dml/v0.9">
+    <name>stc</name>
+    <description>This is a sample data model for Space Time Coordinates. It contains few Types to support Omar's
+        VODML/UTYPEs prototypes'
+    </description>
+    <title>Sample STC data model.</title>
+    <version>proto</version>
+    <lastModified>2013-05-09T16:28:25</lastModified>
+    <import>
+        <name>ivoa</name>
+        <version>proto</version>
+        <url>file:IVOA-proto.vodml.xml</url>
+        <documentationURL>http://volute.googlecode.com/svn/trunk/projects/dm/vo-dml/models/ivoa/IVOA.html
+        </documentationURL>
+    </import>
+    <objectType>
+        <vodml-id>SkyCoordinateFrame</vodml-id>
+        <name>SkyCoordinateFrame</name>
+        <description>
+            TODO : Missing description : please, update your UML model asap.
+        </description>
+        <attribute>
+            <vodml-id>SkyCoordinateFrame.name</vodml-id>
+            <name>name</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>SkyCoordinateFrame.documentURI</vodml-id>
+            <name>documentURI</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:anyURI</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>SkyCoordinateFrame.equinox</vodml-id>
+            <name>equinox</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>SkyCoordinateFrame.system</vodml-id>
+            <name>system</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:string</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </objectType>
+
+    <dataType abstract="true">
+        <vodml-id>SkyError</vodml-id>
+        <name>SkyError</name>
+        <description>Error of a position on the sky.</description>
+    </dataType>
+
+    <dataType>
+        <vodml-id>CircleError</vodml-id>
+        <name>CircleError</name>
+        <description>
+            TODO : Missing description : please, update your UML model asap.
+        </description>
+        <extends>
+            <utype>stc:SkyError</utype>
+        </extends>
+        <attribute>
+            <vodml-id>CircleError.radius</vodml-id>
+            <name>radius</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:real</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </dataType>
+
+    <dataType>
+        <vodml-id>AlignedEllipse</vodml-id>
+        <name>AlignedEllipse</name>
+        <description>
+            TODO : Missing description : please, update your UML model asap.
+        </description>
+        <extends>
+            <utype>stc:SkyError</utype>
+        </extends>
+        <attribute>
+            <vodml-id>AlignedEllipse.longError</vodml-id>
+            <name>longError</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:real</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>AlignedEllipse.latError</vodml-id>
+            <name>latError</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:real</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </dataType>
+
+    <dataType>
+        <vodml-id>GenericEllipse</vodml-id>
+        <name>GenericEllipse</name>
+        <description>
+            TODO : Missing description : please, update your UML model asap.
+        </description>
+        <extends>
+            <utype>stc:SkyError</utype>
+        </extends>
+        <attribute>
+            <vodml-id>GenericEllipse.major</vodml-id>
+            <name>major</name>
+            <description>major axis of error ellipse</description>
+            <datatype>
+                <utype>ivoa:real</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>GenericEllipse.minor</vodml-id>
+            <name>minor</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>ivoa:real</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>GenericEllipse.pa</vodml-id>
+            <name>pa</name>
+            <description>Position angle of error ellipse in coordinate system of position.</description>
+            <datatype>
+                <utype>ivoa:real</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>0</minOccurs>
+                <maxOccurs>-1</maxOccurs>
+            </multiplicity>
+        </attribute>
+    </dataType>
+
+    <dataType>
+        <vodml-id>SkyCoordinate</vodml-id>
+        <name>SkyCoordinate</name>
+        <description>
+            TODO : Missing description : please, update your UML model asap.
+        </description>
+        <attribute>
+            <vodml-id>SkyCoordinate.longitude</vodml-id>
+            <name>longitude</name>
+            <description>The longitude part of this position in units of degrees.</description>
+            <datatype>
+                <utype>ivoa:quantity.RealQuantity</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <attribute>
+            <vodml-id>SkyCoordinate.latitude</vodml-id>
+            <name>latitude</name>
+            <description>The latitude part of this position in units of degrees.</description>
+            <datatype>
+                <utype>ivoa:quantity.RealQuantity</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </attribute>
+        <reference>
+            <vodml-id>SkyCoordinate.frame</vodml-id>
+            <name>frame</name>
+            <description>
+                TODO : Missing description : please, update your UML model asap.
+            </description>
+            <datatype>
+                <utype>stc:SkyCoordinateFrame</utype>
+            </datatype>
+            <multiplicity>
+                <minOccurs>1</minOccurs>
+                <maxOccurs>1</maxOccurs>
+            </multiplicity>
+        </reference>
+    </dataType>
+</vo-dml:model>

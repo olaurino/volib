@@ -1,0 +1,34 @@
+import volib
+{% macro package(pkg, prefix) -%}
+    {% if prefix != '' -%}
+        {% set prefix = prefix + '.' -%}
+    {% endif -%}
+    {% for type in ('dataType', 'objectType', 'enumeration') -%}
+        {% for t in pkg[type] %}
+            '{{ t.vodml_id }}': '{{ prefix }}{{ t.name|alpha }}',
+        {% endfor -%}
+    {% endfor -%}
+    {% for sub in pkg.package -%}
+        {% if prefix == '' -%}
+            {% set prefix = sub.name -%}
+        {% else %}
+            {% set prefix = prefix + sub.name -%}
+        {% endif -%}
+        {{ package(sub, prefix) -}}
+    {% endfor -%}
+{%- endmacro -%}
+{% set name = instance.name|alpha -%}
+{% set version = instance.version|alpha -%}
+{% set qualified_name = name+'_'+version -%}
+class Resolver(volib.Resolver):
+
+    def __init__(self):
+        self.name = '{{ name }}'
+        self.version = '{{ instance.version }}'
+        self.root_pkg = '{{ meta.name }}'
+        self.import_ = 'from {{ meta.name }} import {{ qualified_name }}'
+        self._resolver = {
+{{ package(instance, qualified_name) }}
+        }
+
+resolver = Resolver()
