@@ -64,20 +64,20 @@ code describing the IVOA description is built-in in VOLIB, since it contains the
 to Python native ones).
 
 If installed (or Development mode is on), the `reference` package registers some `setuptools` EntryPoints that are
-used by the VOLIB framework to dynamically load Python objects corresponding to specific UTYPEs.
+used by the VOLIB framework to dynamically load Python objects corresponding to specific VODML_REFs.
 
 You can test this demo package with:
 
     $ python setup.py develop
     
-For instance, you can get the path to the class corresponding to the SkyCoordinate UTYPE in the Reference Data Model
+For instance, you can get the path to the class corresponding to the SkyCoordinate VODML_REF in the Reference Data Model
 by querying volib as follows:
 
     $ python
     >>> import volib
-    >>> from volib import utypes
-    >>> utype = utypes.UTYPE('ref:source.stc.SkyCoordinate')
-    >>> volib.resolve(utype, '1.0')
+    >>> from volib import vodml_ref
+    >>> vodml_ref = vodml_ref.VODML_REF('ref:source.stc.SkyCoordinate')
+    >>> volib.resolve(vodml_ref, '1.0')
     'ref_1_0.source.stc.SkyCoordinate'
     
 The above code queries volib for the full path of the class representing the `SkyCoordinate` Type defined in the
@@ -86,13 +86,13 @@ Reference Data Model *version 1.0* inside the `stc` package, which is in turn a 
 Note that different versions of the same package can be installed at the same time.
 
 In order to get a hold on the actual Python class (or any other Python object representing the element pointed to
-by a given UTYPE), you can use the `get_object` function:
+by a given VODML_REF), you can use the `get_object` function:
 
-    >>> volib.get_object(utype, '1.0')
+    >>> volib.get_object(vodml_ref, '1.0')
     <class 'reference.ref_1_0.source.stc.SkyCoordinate'>
     
 An higher level API can be used to get a `Context` that caches the values of the versions so that a client can
-resolve `utypes` strings only. For example:
+resolve `vodml_refs` strings only. For example:
 
     >>> from collections import namedtuple
     >>> Model = namedtuple('Model', ('name', 'version'))

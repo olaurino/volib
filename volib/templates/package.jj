@@ -1,5 +1,5 @@
 {% macro attr(attribute, name, multiplicity, meta) -%}
-{{ attribute.name }} = {{ name }}({{ attribute.datatype.utype|resolve(meta, instance) }},
+{{ attribute.name }} = {{ name }}({{ attribute.datatype.vodml_ref|resolve(meta, instance) }},
                     '{{ attribute.vodml_id }}',
     {% if multiplicity != '' %}
                     multiplicity=({{ attribute.multiplicity.minOccurs }}, {{ attribute.multiplicity.maxOccurs }}),
@@ -20,7 +20,7 @@
 {% macro classes(thetype, parent) %}
 {% for thetype in instance[thetype] %}
     {% if thetype.extends %}
-        {% set extends = thetype.extends.utype|resolve(meta, instance) %}
+        {% set extends = thetype.extends.vodml_ref|resolve(meta, instance) %}
     {% else %}
         {% set extends = parent %}
     {% endif %}

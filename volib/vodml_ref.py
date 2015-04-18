@@ -19,14 +19,14 @@ DATATYPE_INSTANCE = "vo-dml:DataType.instance";
 CONTAINER = "vo-dml:Object.container";
 
 
-def is_model(utype):
+def is_model(vodml_ref):
     """
     Returns whether the argument is the utype for a vodml:Model
     """
-    return MODEL == str(utype);
+    return MODEL == str(vodml_ref);
 
 
-def utype_for(referencable_element, model):
+def vodml_ref_for(referencable_element, model):
     """
     utility method to extract the utype from a ReferencableElement
     If this is used, only this method needs to be changed if the
@@ -36,28 +36,28 @@ def utype_for(referencable_element, model):
         if referencable_element is not None else None
 
 
-class UTYPE(object):
+class VODML_REF(object):
     """
-    class for UTYPEs: a UTYPE is a pointer to a vodml_id in a model definition
+    class for VODML_REFs: a VODML_REF is a pointer to a vodml_id in a model definition
     and is represented by a prefix that points to a model and an id pointing
     to an element in that model by its vodml_id.
     Examples:
->>> u = UTYPE('foo:bar')
+>>> u = VODML_REF('foo:bar')
 >>> u.prefix
 'foo'
 >>> u.vodml_id
 'bar'
 >>> print u
 foo:bar
->>> u = UTYPE('bar')
+>>> u = VODML_REF('bar')
 >>> print u.prefix
 None
 >>> print u.vodml_id
 bar
 >>> print u
 bar
->>> u = UTYPE('foo:bar')
->>> u2 = UTYPE('foo:bar')
+>>> u = VODML_REF('foo:bar')
+>>> u2 = VODML_REF('foo:bar')
 >>> u == u2
 True
     """
@@ -71,11 +71,11 @@ True
         return self.prefix + ":" + self.vodml_id if self.prefix is not None else self.vodml_id
 
     def __repr__(self):
-        return "UTYPE -> " + self.__str__()
+        return "VODML_REF -> " + self.__str__()
 
     def __eq__(self, other):
         """
-        Two UTYPEs are equal if they have the same prefix and vodml_id
+        Two VODML_REFs are equal if they have the same prefix and vodml_id
         """
         return (self.prefix, self.vodml_id) == (other.prefix, other.vodml_id)
 

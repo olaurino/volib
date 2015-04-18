@@ -10,7 +10,7 @@ import re
 import imp
 
 import volib
-from volib import vodml, utypes
+from volib import vodml, vodml_ref
 
 
 logging.basicConfig()
@@ -40,11 +40,11 @@ def alpha(string):
     return _nonalpha.sub(r'_', string)
 
 
-def resolve(utype_string, meta, model):
-    utype = utypes.UTYPE(utype_string)
-    version = meta.import_dict[utype.prefix]
-    ret = volib.resolve(utype, version)
-    if model and utype.prefix == model.name:
+def resolve(vodml_ref_string, meta, model):
+    vodmlref = vodml_ref.VODML_REF(vodml_ref_string)
+    version = meta.import_dict[vodmlref.prefix]
+    ret = volib.resolve(vodmlref, version)
+    if model and vodmlref.prefix == model.name:
         ret = ret.replace('%s_%s' % (pythonify(model.name), pythonify(model.version))+'.', '')
     tokens = ret.split(model.name+'.')
     if len(tokens) > 1:
