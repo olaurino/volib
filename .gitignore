@@ -19,7 +19,6 @@ develop-eggs
 lib
 lib64
 __pycache__
-docs
 
 # Installer logs
 pip-log.txt
@@ -52,3 +51,6 @@ Vagrantfile
 
 #vi
 *~
+
+# sphinx
+docs/_build
