@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/olaurino/volib.svg?branch=master)](https://travis-ci.org/olaurino/volib)
+[![Coverage Status](https://coveralls.io/repos/olaurino/volib/badge.svg?branch=master)](https://coveralls.io/r/olaurino/volib?branch=master)
+
 VOLIB
 =====
 
