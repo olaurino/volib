@@ -1,4 +1,5 @@
 from __future__ import print_function
+from six import with_metaclass
 
 __author__ = 'olaurino'
 
@@ -27,8 +28,8 @@ class ReferencableMeta(type):
     Base metaclass for VODML Referencable types. It conveniently creates a vodml-id if one is not explicitly provided
     in the class declaration
     Examples:
->>> class MyReferencable(object):
-...     __metaclass__ = ReferencableMeta
+>>> class MyReferencable(with_metaclass(ReferencableMeta, object)):
+...     pass
 ...
 >>> class MyClass(MyReferencable):
 ...     pass
@@ -50,8 +51,8 @@ myid
         type.__init__(cls, name, bases, d)
 
 
-class ReferencableElement(object):
-    __metaclass__ = ReferencableMeta
+class ReferencableElement(with_metaclass(ReferencableMeta, object)):
+    pass
 
 
 class Role(ReferencableElement):
@@ -267,8 +268,8 @@ class Singleton(type):
     Metaclass for singleton object, i.e., objects that can be instantiated only once. Used mainly, if not only,
     by Enumerator.
     Examples:
->>> class MySingleton(object):
-...     __metaclass__ = Singleton
+>>> class MySingleton(with_metaclass(Singleton, object)):
+...     pass
 ...
 >>> my_instance = MySingleton()
 >>> my_instance2 = MySingleton()
@@ -312,8 +313,8 @@ class FinalChild(type):
     Metaclass for classes that can be extended only once, as for Enumeration.
     The metaclass checks for the __final_child__ flag in the class whose children must not be extended.
     Examples:
->>> class MyClass(object):
-...     __metaclass__ = FinalChild
+>>> class MyClass(with_metaclass(FinalChild, object)):
+...     pass
 ...
 >>> class MyChild(MyClass):
 ...     __final_child__ = True
@@ -371,7 +372,7 @@ class EnumerationMeta(Singleton, ReferencableMeta, FinalChild):
         cls.get_enums = staticmethod(get_enums)
 
 
-class Enumeration(ValueType):
+class Enumeration(with_metaclass(EnumerationMeta, ValueType)):
     """
     Base class for Enumeration types. Most of the logic is in the @EnumerationMeta metaclass.
     Classes implementing Enumeration types MUST extend this class and are considered Final, i.e., they cannot
@@ -392,5 +393,4 @@ Traceback (most recent call last):
 TypeError: Wrong value for Enum MyEnum. Valid values: MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"
 
     """
-    __metaclass__ = EnumerationMeta
     __final_child__ = True
