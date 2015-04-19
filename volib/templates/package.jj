@@ -40,7 +40,7 @@ from volib.model import *
 {{ import|resolve_import }}
 {% endfor %}
 {% for pkg in instance.package %}
-import {{ pkg.name|alpha }}
+from . import {{ pkg.name|alpha }}
 {% endfor %}
 
 
