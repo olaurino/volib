@@ -82,12 +82,12 @@ class Attribute(Role):
 >>> print(obj.attr)
 star
 >>> del obj.attr
->>> type(obj.attr)
-<type 'NoneType'>
+>>> type(obj.attr) # doctest: +ELLIPSIS
+<... 'NoneType'>
 >>> obj.attr = 'foo'
 Traceback (most recent call last):
   ...
-TypeError: Wrong value for Enum MyEnum. Valid values: MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"
+TypeError: Wrong value for Enum MyEnum. Valid values: ...MyEnum.STAR or "star"...
 
     """
 
@@ -141,10 +141,10 @@ class Collection(list):
 >>> l = Collection(Classification)
 >>> l.append(Classification.STAR)
 >>> l.append('galaxy')
->>> l.append(QsoType.QUASAR)
+>>> l.append(QsoType.QUASAR) # doctest: +ELLIPSIS
 Traceback (most recent call last):
     ...
-TypeError: Wrong value for Enum Classification. Valid values: Classification.STAR or "star", Classification.GALAXY or "galaxy"
+TypeError: Wrong value for Enum Classification. Valid values: ...Classification.STAR or "star"...
 >>> l = Collection(QsoType, multiplicity=(2,2))
 >>> len(l)
 2
@@ -163,7 +163,7 @@ galaxy
 >>> l[0]=QsoType.QUASAR
 Traceback (most recent call last):
     ...
-TypeError: Wrong value for Enum Classification. Valid values: Classification.STAR or "star", Classification.GALAXY or "galaxy"
+TypeError: Wrong value for Enum Classification. Valid values: ...Classification.STAR or "star"...
 >>> l.append(Classification.STAR)
 Traceback (most recent call last):
     ...
@@ -175,7 +175,7 @@ IndexError: Index out of range: this Collection has a max multiplicity of 2
 >>> l.append(QsoType.QUASAR)
 Traceback (most recent call last):
     ...
-TypeError: Wrong value for Enum Classification. Valid values: Classification.STAR or "star", Classification.GALAXY or "galaxy"
+TypeError: Wrong value for Enum Classification. Valid values: ...Classification.STAR or "star"...
 >>> l = Collection(Classification, multiplicity=(0,2), default=('star', 'galaxy'))
 >>> l[2] = Classification.STAR
 Traceback (most recent call last):
@@ -385,12 +385,12 @@ class Enumeration(with_metaclass(EnumerationMeta, ValueType)):
 ...
 >>> MyEnum.get_value('star') # doctest: +ELLIPSIS
 <....Enum object at ...>
->>> MyEnum.get_enums()
-'MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"'
->>> MyEnum.get_value('foo')
+>>> MyEnum.get_enums() # doctest: +ELLIPSIS
+'...MyEnum.STAR or "star"...'
+>>> MyEnum.get_value('foo') # doctest: +ELLIPSIS
 Traceback (most recent call last):
   ...
-TypeError: Wrong value for Enum MyEnum. Valid values: MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"
+TypeError: Wrong value for Enum MyEnum. Valid values: ...MyEnum.STAR or "star"...
 
     """
     __final_child__ = True
