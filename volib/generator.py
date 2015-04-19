@@ -2,8 +2,12 @@ __author__ = 'olaurino'
 
 __all__ = ['generate_code']
 
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
+
 import logging
-import urllib2
 import os
 import shutil
 import re

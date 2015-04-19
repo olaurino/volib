@@ -5,6 +5,8 @@ Created on Thu Nov 21 20:02:18 2013
 @author: olaurino
 """
 
+from __future__ import print_function
+
 MODEL = "vo-dml:Model";
 MODEL_URL = "vo-dml:Model.url";
 MODEL_PREFIX = "vo-dml:Model.name";
@@ -47,14 +49,14 @@ class VODML_REF(object):
 'foo'
 >>> u.vodml_id
 'bar'
->>> print u
+>>> print(u)
 foo:bar
 >>> u = VODML_REF('bar')
->>> print u.prefix
+>>> print(u.prefix)
 None
->>> print u.vodml_id
+>>> print(u.vodml_id)
 bar
->>> print u
+>>> print(u)
 bar
 >>> u = VODML_REF('foo:bar')
 >>> u2 = VODML_REF('foo:bar')

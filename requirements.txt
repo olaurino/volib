@@ -1,4 +1,5 @@
 pyxb==1.2.4
+six
 networkx
 furl
 jinja2

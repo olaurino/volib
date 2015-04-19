@@ -1,3 +1,6 @@
+from __future__ import print_function
+from six import with_metaclass, iteritems
+
 __author__ = 'olaurino'
 
 __all__ = ['Enum', 'Enumeration', 'DataType', 'Attribute', 'Collection', 'Reference', 'ValueType', 'ObjectType']
@@ -14,7 +17,7 @@ error = logger.error
 
 def get_fields(d, clazz):
     ret = {}
-    for k, v in d.iteritems():
+    for k, v in iteritems(d):
         if isinstance(v, clazz):
             ret[k] = v
     return ret
@@ -25,20 +28,20 @@ class ReferencableMeta(type):
     Base metaclass for VODML Referencable types. It conveniently creates a vodml-id if one is not explicitly provided
     in the class declaration
     Examples:
->>> class MyReferencable(object):
-...     __metaclass__ = ReferencableMeta
+>>> class MyReferencable(with_metaclass(ReferencableMeta, object)):
+...     pass
 ...
 >>> class MyClass(MyReferencable):
 ...     pass
 ...
->>> print MyReferencable.vodml_id
+>>> print(MyReferencable.vodml_id)
 MyReferencable
->>> print MyClass.vodml_id
+>>> print(MyClass.vodml_id)
 MyClass
 >>> class MyOtherClass(MyReferencable):
 ...     vodml_id = 'myid'
 ...
->>> print MyOtherClass.vodml_id
+>>> print(MyOtherClass.vodml_id)
 myid
     """
 
@@ -48,8 +51,8 @@ myid
         type.__init__(cls, name, bases, d)
 
 
-class ReferencableElement(object):
-    __metaclass__ = ReferencableMeta
+class ReferencableElement(with_metaclass(ReferencableMeta, object)):
+    pass
 
 
 class Role(ReferencableElement):
@@ -76,15 +79,15 @@ class Attribute(Role):
 <class '....Enum'>
 >>> obj.attr.value
 'star'
->>> print obj.attr
+>>> print(obj.attr)
 star
 >>> del obj.attr
->>> type(obj.attr)
-<type 'NoneType'>
+>>> type(obj.attr) # doctest: +ELLIPSIS
+<... 'NoneType'>
 >>> obj.attr = 'foo'
 Traceback (most recent call last):
   ...
-TypeError: Wrong value for Enum MyEnum. Valid values: MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"
+TypeError: Wrong value for Enum MyEnum. Valid values: ...MyEnum.STAR or "star"...
 
     """
 
@@ -138,29 +141,29 @@ class Collection(list):
 >>> l = Collection(Classification)
 >>> l.append(Classification.STAR)
 >>> l.append('galaxy')
->>> l.append(QsoType.QUASAR)
+>>> l.append(QsoType.QUASAR) # doctest: +ELLIPSIS
 Traceback (most recent call last):
     ...
-TypeError: Wrong value for Enum Classification. Valid values: Classification.STAR or "star", Classification.GALAXY or "galaxy"
+TypeError: Wrong value for Enum Classification. Valid values: ...Classification.STAR or "star"...
 >>> l = Collection(QsoType, multiplicity=(2,2))
 >>> len(l)
 2
->>> print l
+>>> print(l)
 [None, None]
 >>> l[0] = QsoType.BLAZAR
->>> print l[0]
+>>> print(l[0])
 blazar
 >>> l = Collection(Classification, multiplicity=(2,2), default=(Classification.STAR, 'galaxy'))
->>> print l[0]
+>>> print(l[0])
 star
->>> print l[1]
+>>> print(l[1])
 galaxy
 >>> len(l)
 2
 >>> l[0]=QsoType.QUASAR
 Traceback (most recent call last):
     ...
-TypeError: Wrong value for Enum Classification. Valid values: Classification.STAR or "star", Classification.GALAXY or "galaxy"
+TypeError: Wrong value for Enum Classification. Valid values: ...Classification.STAR or "star"...
 >>> l.append(Classification.STAR)
 Traceback (most recent call last):
     ...
@@ -172,7 +175,7 @@ IndexError: Index out of range: this Collection has a max multiplicity of 2
 >>> l.append(QsoType.QUASAR)
 Traceback (most recent call last):
     ...
-TypeError: Wrong value for Enum Classification. Valid values: Classification.STAR or "star", Classification.GALAXY or "galaxy"
+TypeError: Wrong value for Enum Classification. Valid values: ...Classification.STAR or "star"...
 >>> l = Collection(Classification, multiplicity=(0,2), default=('star', 'galaxy'))
 >>> l[2] = Classification.STAR
 Traceback (most recent call last):
@@ -265,8 +268,8 @@ class Singleton(type):
     Metaclass for singleton object, i.e., objects that can be instantiated only once. Used mainly, if not only,
     by Enumerator.
     Examples:
->>> class MySingleton(object):
-...     __metaclass__ = Singleton
+>>> class MySingleton(with_metaclass(Singleton, object)):
+...     pass
 ...
 >>> my_instance = MySingleton()
 >>> my_instance2 = MySingleton()
@@ -310,8 +313,8 @@ class FinalChild(type):
     Metaclass for classes that can be extended only once, as for Enumeration.
     The metaclass checks for the __final_child__ flag in the class whose children must not be extended.
     Examples:
->>> class MyClass(object):
-...     __metaclass__ = FinalChild
+>>> class MyClass(with_metaclass(FinalChild, object)):
+...     pass
 ...
 >>> class MyChild(MyClass):
 ...     __final_child__ = True
@@ -353,7 +356,7 @@ class EnumerationMeta(Singleton, ReferencableMeta, FinalChild):
                 else:
                     raise TypeError("Wrong value for Enum %s. Valid values: %s" % (name, cls.get_enums()))
 
-            for field, enum in cls._enums.iteritems():
+            for field, enum in iteritems(cls._enums):
                 if enum.value == value:
                     return enum
             else:
@@ -363,13 +366,13 @@ class EnumerationMeta(Singleton, ReferencableMeta, FinalChild):
 
         def get_enums():
             _str = ', '.join(
-                ['.'.join((name, field)) + ' or "' + enum.value + '"' for field, enum in cls._enums.iteritems()])
+                ['.'.join((name, field)) + ' or "' + enum.value + '"' for field, enum in iteritems(cls._enums)])
             return _str
 
         cls.get_enums = staticmethod(get_enums)
 
 
-class Enumeration(ValueType):
+class Enumeration(with_metaclass(EnumerationMeta, ValueType)):
     """
     Base class for Enumeration types. Most of the logic is in the @EnumerationMeta metaclass.
     Classes implementing Enumeration types MUST extend this class and are considered Final, i.e., they cannot
@@ -382,13 +385,12 @@ class Enumeration(ValueType):
 ...
 >>> MyEnum.get_value('star') # doctest: +ELLIPSIS
 <....Enum object at ...>
->>> MyEnum.get_enums()
-'MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"'
->>> MyEnum.get_value('foo')
+>>> MyEnum.get_enums() # doctest: +ELLIPSIS
+'...MyEnum.STAR or "star"...'
+>>> MyEnum.get_value('foo') # doctest: +ELLIPSIS
 Traceback (most recent call last):
   ...
-TypeError: Wrong value for Enum MyEnum. Valid values: MyEnum.STAR or "star", MyEnum.GALAXY or "galaxy"
+TypeError: Wrong value for Enum MyEnum. Valid values: ...MyEnum.STAR or "star"...
 
     """
-    __metaclass__ = EnumerationMeta
     __final_child__ = True
