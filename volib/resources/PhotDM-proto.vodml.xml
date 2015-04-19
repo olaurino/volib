@@ -28,7 +28,7 @@
             TODO : Missing description : please, update your UML model asap.
         </description>
         <extends>
-            <utype>photdm:ZeroPoint</utype>
+            <vodml-ref>photdm:ZeroPoint</vodml-ref>
         </extends>
         <attribute>
             <vodml-id>AsinhZeroPoint.softeningCoefficient</vodml-id>
@@ -37,7 +37,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:real</utype>
+                <vodml-ref>ivoa:real</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -53,7 +53,7 @@
             TODO : Missing description : please, update your UML model asap.
         </description>
         <extends>
-            <utype>photdm:ZeroPoint</utype>
+            <vodml-ref>photdm:ZeroPoint</vodml-ref>
         </extends>
     </objectType>
 
@@ -70,7 +70,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -84,7 +84,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:anyURI</utype>
+                <vodml-ref>ivoa:anyURI</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -98,7 +98,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>photdm:Source</utype>
+                <vodml-ref>photdm:Source</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -120,7 +120,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>photdm:ZeroPoint</utype>
+                <vodml-ref>photdm:ZeroPoint</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -134,7 +134,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>photdm:MagnitudeSystem</utype>
+                <vodml-ref>photdm:MagnitudeSystem</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -148,7 +148,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>photdm:PhotometryFilter</utype>
+                <vodml-ref>photdm:PhotometryFilter</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -168,7 +168,7 @@
             <name>description</name>
             <description>String representation Photometric system</description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -180,7 +180,7 @@
             <name>detectorType</name>
             <description>Type of detector (e.g energy or photon counter)</description>
             <datatype>
-                <utype>ivoa:integer</utype>
+                <vodml-ref>ivoa:integer</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -194,7 +194,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>photdm:PhotometryFilter</utype>
+                <vodml-ref>photdm:PhotometryFilter</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -215,7 +215,7 @@
             <name>fpsIdentifier</name>
             <description>IVOA identifier of the Filter Profile Service</description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -229,7 +229,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -243,7 +243,7 @@
                 configuration
             </description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -255,7 +255,7 @@
             <name>description</name>
             <description>Text description of the filter band</description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -270,7 +270,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:string</utype>
+                <vodml-ref>ivoa:string</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -284,7 +284,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:datetime</utype>
+                <vodml-ref>ivoa:datetime</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -298,7 +298,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:datetime</utype>
+                <vodml-ref>ivoa:datetime</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -312,7 +312,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -326,7 +326,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>char:Coverage</utype>
+                <vodml-ref>char:Coverage</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -340,7 +340,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>char:Access</utype>
+                <vodml-ref>char:Access</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -354,7 +354,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>photdm:TransmissionPoint</utype>
+                <vodml-ref>photdm:TransmissionPoint</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>0</minOccurs>
@@ -370,7 +370,7 @@
             TODO : Missing description : please, update your UML model asap.
         </description>
         <extends>
-            <utype>photdm:ZeroPoint</utype>
+            <vodml-ref>photdm:ZeroPoint</vodml-ref>
         </extends>
     </objectType>
 
@@ -388,7 +388,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -402,7 +402,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -434,7 +434,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -448,7 +448,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -462,7 +462,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>
@@ -476,7 +476,7 @@
                 TODO : Missing description : please, update your UML model asap.
             </description>
             <datatype>
-                <utype>ivoa:quantity.RealQuantity</utype>
+                <vodml-ref>ivoa:quantity.RealQuantity</vodml-ref>
             </datatype>
             <multiplicity>
                 <minOccurs>1</minOccurs>

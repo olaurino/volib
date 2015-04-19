@@ -38,7 +38,7 @@ setup(name='volib',
           'furl',
           'jinja2',
           'networkx',
-          'pyxb==1.2.3',
+          'pyxb==1.2.4',
       ],
       tests_require=[
 	      'pytest-cov',

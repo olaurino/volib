@@ -6,67 +6,22 @@
 
   <xsd:annotation>
     <xsd:documentation>
+    
       This schema defines the "vo-dml meta model", a modeling language used to define the concepts
       and structures that describe data models. It is proposed as the common language for
       defining data models in the IVOA.
-      It aims to represent the
-      UML profile defined ... [TBD ref to magicdraw uml profile].
-
-      The approach was inspired by Laurent Bourges' .._FOR_GEN.xml file generated
-      for use by Java code in ...[TBD ref?].
-
-      The current version is a successor to the "intermediate representation"
-      embodied in intermediateModel.xsd originally
-      used in VO-URP and especially in the Simulation Data Model effort.
-      There this language was used as the schema for documents generated from the XMI in the first
-      step in the code generation pipeline. This
-      representation of data models is much more
-      explicit than XMI and
-      reduces the number of modeling concepts, which greatly eases the writing
-      of post-processing XSLT scripts.
-      If could relatively easily be written by hand just as an XML schema,
-      or generated
-      any other way [TBD example SimTAP?].
-
-      The current version aims to be more formal than its predeccessor, its main goal
-      is to allow a clean data model definition,
-      that allows reuse,
-      mapping, referencing through UTYPEs etc.
-      It adds some new features such as
-      model import, tightens the definition of some others such as TypeRef.
-      Some features that were included in
-      intermediateModel.xsd for ease of processing (such as
-      referrers,
-      an embedded Profile) have been left out, or have been replaced with a better
-      definition (such as container)
-      remain as they may be be
-      explicitly included in natural representations and hence may need to be an
-      explicit target for use in referencing by UTYPEs for example.
-
-      This version of the schema goes all out in
-      attempting to use
-      utype truly as data model element identifiers.
-      For this to work and put no particular constraints on UTYPE format, we cannot use a utype as an ID.
-      Instead we use them as a key.
-      Advantage of this
-      usage is that referencing remote and local elements can all
-      be done in same way, using a "utyperef",
-      which then may have to be a kkeyref. Note that in that case the remote
-      element MUST be included
-      explicitly in the model,
-      otherwise it can not be referred to. But in that case the ID mechanism may be used again...
-    </xsd:documentation>
+TBD continue based on VO-DML specification document.
+     </xsd:documentation>
     <xsd:documentation>
     Look at SVN versions 2129 and earlier for more extensive model.
     </xsd:documentation>
   </xsd:annotation>
 
-  <!-- +++++++++++++++++++ Begin of 'UTYPE section' +++++++++++++++++++ -->
-  <xsd:simpleType name="ElementID" >
+  <!-- +++++++++++++++++++ Begin of 'Identifier section' +++++++++++++++++++ -->
+  <xsd:simpleType name="VODMLID" >
     <xsd:annotation>
       <xsd:documentation>
-          Type representing the way referenceable elements are identified uniquely in VO-DML.
-          TBD We could use an xsd:NCName where ElementID is used, but that may have somewhat more sever syntax constraints than desired.
+          Type representing the way referable elements are identified uniquely in VO-DML.
       </xsd:documentation>
     </xsd:annotation>
       <xsd:restriction base="xsd:string">
@@ -74,14 +29,13 @@
         <xsd:documentation>
         A restriction on the valid strings that make this a VO-DML Identifier.
         Requirements on the format are: 1) use in XML document 2) use as fragment in URI
-        TODO define the restriction.
         </xsd:documentation>
       </xsd:annotation>
           <xsd:pattern value="[\w\._-]+"/>
       </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:simpleType name="ModelPrefix">
+  <xsd:simpleType name="ModelName">
     <xsd:annotation>
       <xsd:documentation>
         Type used to restrict valid values for prefixes.
@@ -92,23 +46,23 @@
       <xsd:pattern value="[\w_-]+">
         <xsd:annotation>
           <xsd:documentation>
-            A prefix MUST NOT contain a semicolon.
+            A model name MUST NOT contain a semicolon.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:pattern>
     </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:simpleType name="UTYPE">
+  <xsd:simpleType name="VODMLREF">
     <xsd:annotation>
       <xsd:documentation>
         Class representing the way ReferencableElements can be referenced in VO-DML.
         It must be possible to refer to elements in other, imported data models as well as in the current model.
-        Hence the UTYPE must identify both model and element.
+        Hence the VODMLREF must identify both model and element.
         The element is identified by the VO-DML ID in the model, the model is identified using a
           prefix that MUST correspond to the vodml-id element of the current or an imported model.
           Note, references to element sin the current model MUST also have a prefix, there is no default model!
-        TBD We could use an xsd:QName where UTYPE is used, but that may have somewhat more sever syntax constraints than desired.
+        TBD We could use an xsd:QName where VODMLREF is used, but that may have somewhat more sever syntax constraints than desired.
       </xsd:documentation>
     </xsd:annotation>
       <xsd:restriction base="xsd:string"> <!--  xsd:QName ?  -->
@@ -128,21 +82,22 @@
       </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:complexType name="ReferencableElement" abstract="true">
+  <xsd:complexType name="ReferableElement" abstract="true">
     <xsd:annotation>
       <xsd:documentation>
         This is the base type for all types whose elements can be explicitly referenced.
-        To this end it has a 'utype' element of type UTYPE that allows explicit and unique identification of these elements.
+        To this end it has a 'vodml-id' element of type VODMLID that allows explicit and unique identification of 
+        these elements within the context of the model.
         Generally these are also elements that can be
         represented explicitly in alternative serialisations of
         a data model, such as a VOTable or a relational model.
         These should use the value of the utype element to "point into a data model" and identify a
         model element. VO-DML itself also has needs of pointing to other elements, sometimes in another model.
-        The UTYPEref type is used for such references, which will always be named .utyperef'.
+        The VODMLREF type is used for such references, which will always be named 'vodml-ref'.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="vodml-id" type="ElementID" minOccurs="1">
+      <xsd:element name="vodml-id" type="VODMLID" minOccurs="1">
         <xsd:annotation>
           <xsd:documentation>
               Identifier for its containing element.
@@ -150,12 +105,18 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="name" type="xsd:string" minOccurs="1">
+      <xsd:element name="name" minOccurs="1" >
         <xsd:annotation>
           <xsd:documentation>
-            The name of the model element. May be restricted with uniqueness constraints in subclasses.
+            The name of the model element. 
+            MUST NOT be an empty string.
           </xsd:documentation>
         </xsd:annotation>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:NCName">
+            <xsd:minLength value="1"/>
+          </xsd:restriction>
+        </xsd:simpleType>
       </xsd:element>
       <xsd:element name="description" type="xsd:string" minOccurs="0">
         <xsd:annotation>
@@ -192,11 +153,11 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="utype" type="UTYPE">
+      <xsd:element name="vodml-ref" type="VODMLREF">
         <xsd:annotation>
           <xsd:documentation>
             The element identifying the referenced target element.
-            See the documentation for the UTYPE type.
+            See the documentation for the VODMLREF type.
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
@@ -215,7 +176,7 @@
             </xsd:documentation>
     </xsd:annotation>
         <xsd:sequence>
-            <xsd:element name="name" type="ModelPrefix" minOccurs="1" maxOccurs="1">
+            <xsd:element name="name" type="ModelName" minOccurs="1" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation>
                         Short name of the model.
@@ -267,7 +228,7 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-      <xsd:element name="import" type="ModelProxy" minOccurs="0" maxOccurs="unbounded">
+      <xsd:element name="import" type="ModelImport" minOccurs="0" maxOccurs="unbounded">
         <xsd:annotation>
           <xsd:documentation>
             An 'import' element indicates a dependency on an external, predefined VO-DML data model.
@@ -292,25 +253,11 @@
           </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-            <xsd:element name="package" type="Package" minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="primitiveType" type="PrimitiveType" minOccurs="0" maxOccurs="unbounded">
                 <xsd:annotation>
                     <xsd:documentation>
-                        The collection of packages which can contain further detailed name spacing to
-                        the type definitions in the model.
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="objectType" type="ObjectType" minOccurs="0" maxOccurs="unbounded">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        Collection of ObjectType definitions directly under the model, i.e. not contained in a Package.
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="dataType" type="DataType" minOccurs="0" maxOccurs="unbounded">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        Collection of DataType definitions directly under the model, i.e. not contained in a Package.
+                        Collection of PrimitiveType definitions directly under the model, i.e. not contained in a
+                        Package.
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
@@ -321,11 +268,25 @@
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="primitiveType" type="PrimitiveType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="dataType" type="DataType" minOccurs="0" maxOccurs="unbounded">
                 <xsd:annotation>
                     <xsd:documentation>
-                        Collection of PrimitiveType definitions directly under the model, i.e. not contained in a
-                        Package.
+                        Collection of DataType definitions directly under the model, i.e. not contained in a Package.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="objectType" type="ObjectType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Collection of ObjectType definitions directly under the model, i.e. not contained in a Package.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="package" type="Package" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The collection of packages which can contain further detailed name spacing to
+                        the type definitions in the model.
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
@@ -333,17 +294,17 @@
     </xsd:complexType>
 
 
-    <xsd:complexType name="ModelProxy">
+    <xsd:complexType name="ModelImport">
     <xsd:annotation>
       <xsd:documentation>
-        A "proxy" for an external model. Represents another model that is used by the current model.
+        A "proxy" for an external model that is being used by the current model. 
         Defines the url where the VO-DML representation of that model can be retrieved, and
-        a prefix that MUST be used when making references to
-        elements in that model using a UTYPEref element.
+        replicates its name that MUST be used when making references to
+        elements in that model using a VODMLREF element.
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-        <xsd:element name="name" type="ModelPrefix" minOccurs="1">
+        <xsd:element name="name" type="ModelName" minOccurs="1">
             <xsd:annotation>
                 <xsd:documentation>
                     Name by which imported model is used in the current model and its documentation.
@@ -352,20 +313,13 @@
                 </xsd:documentation>
         </xsd:annotation>
       </xsd:element>
-        <xsd:element name="version" type="xsd:string" minOccurs="1">
+        <xsd:element name="version" type="xsd:string" minOccurs="0">
             <xsd:annotation>
                 <xsd:documentation>
-                    Version of the current model.
+                    Version of the imported model.
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:element>
-        <xsd:element name="ivoId" type="xsd:anyURI" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>
-            IVO Identifier of the imported model if that exists, i.e. if that has been registered in an IVOA Registry.
-          </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
       <xsd:element name="url" type="xsd:anyURI" minOccurs="1">
         <xsd:annotation>
           <xsd:documentation>
@@ -406,7 +360,7 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
-            <xsd:extension base="ReferencableElement">
+            <xsd:extension base="ReferableElement">
                 <xsd:annotation>
                     <xsd:documentation>
                         Name of the package is constrained in that
@@ -417,17 +371,10 @@
                     </xsd:documentation>
                 </xsd:annotation>
                 <xsd:sequence>
-                    <xsd:element name="objectType" type="ObjectType" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element name="primitiveType" type="PrimitiveType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
                             <xsd:documentation>
-                                Collection of ObjectType-s defined in this package.
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                    <xsd:element name="dataType" type="DataType" minOccurs="0" maxOccurs="unbounded">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                Collection of DataType-s defined in this package.
+                                Collection of PrimitiveType-s defined in this package.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -438,10 +385,17 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
-                    <xsd:element name="primitiveType" type="PrimitiveType" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element name="dataType" type="DataType" minOccurs="0" maxOccurs="unbounded">
                         <xsd:annotation>
                             <xsd:documentation>
-                                Collection of PrimitiveType-s defined in this package.
+                                Collection of DataType-s defined in this package.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="objectType" type="ObjectType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Collection of ObjectType-s defined in this package.
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -472,7 +426,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexContent>
-      <xsd:extension base="ReferencableElement">
+      <xsd:extension base="ReferableElement">
         <xsd:sequence>
           <xsd:element name="extends" type="ElementRef" minOccurs="0">
             <xsd:annotation>
@@ -509,17 +463,7 @@
   <xsd:complexType name="ObjectType">
     <xsd:annotation>
       <xsd:documentation>
-        TBD improve next description; make it less obscure; refer to ...
-        "A type with an identity". This in contrast to value types where the value identifies the instance.
-        Could be
-        called Class to correspond closer to UML counterpart, though
-        ObjectType is somewhat more explicitl.
-        Using Class causes some problems in usage as it is often a reserved keyword.
-        TBD should we
-        include an explicit id attribute. Simplieifes it being referenced with UTYPE-s, but somewhat complex
-        how to define
-        minOccirs rule. Should for each concrete class have exactly one in extension
-        hierarchy.
+        TBD use description form VO-DML specification document. to ...
       </xsd:documentation>
     </xsd:annotation>
     <xsd:complexContent>
@@ -629,7 +573,7 @@
 
   <xsd:complexType name="EnumLiteral">
     <xsd:complexContent>
-      <xsd:extension base="ReferencableElement">
+      <xsd:extension base="ReferableElement">
         <xsd:sequence>
          </xsd:sequence>
       </xsd:extension>
@@ -660,7 +604,7 @@
     </xsd:annotation>
 
     <xsd:complexContent>
-      <xsd:extension base="ReferencableElement">
+      <xsd:extension base="ReferableElement">
         <xsd:sequence>
           <xsd:element name="datatype" type="ElementRef">
             <xsd:annotation>
@@ -892,165 +836,22 @@
     <xsd:complexType name="Constraint">
         <xsd:annotation>
       <xsd:documentation>
-        It is useful to be able to attach constraints to data model elements beyond the multiplicity.
-        Constraints apply to instances of types or roles.
-        In general these can be complex and might require a language such as OCL (=Object
-        Constraint Language).
-          In VO-DML constraints can be added to a Type. A special set of constraints can apply to attributes,
-          the AttributeCOnstraint.
+      Constraint represents rules that instances of Type-s must obey to be valid.  
+      A Constraint is a referable element. Its description element describes the constrait in English.
+      In future versions of the language extra elements may be added that give a more formal
+      definition of the constraint. In particular we may add expressions in a language
+      such as OCL or subset thereof tuned to VO-DML.
+      In terms of OCL, VO-DML COnstraint-s are invariants of a Type.
       </xsd:documentation>
     </xsd:annotation>
-        <xsd:sequence>
-            <xsd:element name="expression" type="ConstraintExpression" minOccurs="0">
-            <xsd:annotation>
-          <xsd:documentation>
-            An expression constraining the value to which the constraint is applied.
-            May be human readable for now, could become a regular expression, or maybe OCL expression in future.
-            To be implemented by hand in target representations of
-            the model.
-          </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-        </xsd:sequence>
+    <xsd:complexContent>
+    <xsd:extension base="ReferableElement"></xsd:extension>
+    </xsd:complexContent>
     </xsd:complexType>
 
-    <xsd:complexType name="AttributeConstraints">
-        <xsd:annotation>
-            <xsd:documentation>
-                An AttributeConstraint is defined of a type and references an attribute available on the type, either
-                directly
-                or through inheritance. It defines a set of simple constraints such as minValue/maxValue etc that
-                can easily be
-                parametrized and do not require the full definition of a complex constraint.
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexContent>
-            <xsd:extension base="Constraint">
-                <xsd:sequence>
-                    <xsd:element name="attribute" type="ElementRef">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                Identifies the attribute that is constrained. This attribute MUST be available on the
-                                type
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                    <xsd:choice minOccurs="1" maxOccurs="unbounded">
-                        <xsd:element name="minValue" type="xsd:string">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    For attributes with the minimum value the attribute is allowed to string attribute,
-                                    the minimum length the string must have.
-                                    TBD useful?
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
-                        <xsd:element name="minLength" type="xsd:int">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    For a string attribute, the minimum length the string must have.
-                                    TBD useful?
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
-                        <xsd:element name="maxLength" type="xsd:int">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    For a string attribute, the maximum length the string must have.
-                                    When &lt;= 0, indicates the string has no length limit.
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
-                        <xsd:element name="length" type="xsd:int">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    For a string attribute, the exact length the string must have.
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
-                        <xsd:element name="uniqueGlobally" type="xsd:boolean" default="false">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    Indicates that the value of the attribute must be "globally" unique.
-                                    TBD what is the context? A database, the IVOA?...
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
-                        <xsd:element name="uniqueInCollection" type="xsd:boolean" default="false">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    Indicates that the value of the attribute must be unique in the collection of
-                                    objects that the parent type belongs to.
-                                    SHould be not-null.
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
-                    </xsd:choice>
-                </xsd:sequence>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-
-    <xsd:complexType name="ConstraintExpression">
-    <xsd:annotation>
-      <xsd:documentation>
-        Sometimes constrants are more complex than some simple limit on ranges or values supported by the various explicit choices in the Constraints type.
-        Designers can define more complex expressions using the current class.
-      </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="expression" type="xsd:string">
-        <xsd:annotation>
-          <xsd:documentation>
-            The expression defining the constraint. This can be in any language, one of the ones supported by the language element below,
-            or some custom language.
-          </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="language" minOccurs="0" default="Custom">
-        <xsd:simpleType>
-          <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="XSD">
-              <xsd:annotation>
-                <xsd:documentation>
-                    Indicates that the expression should be interpreted asan XSD 'pattern' regular expression
-                    when used in .
-                </xsd:documentation>
-              </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="Java">
-              <xsd:annotation>
-                <xsd:documentation>
-                    Indicates that the expression should be interpreted as a Java 'java.util.regex.Pattern' regular
-                    expression
-                    when used in an AttributeConstraint, or as a generic boolean expression in terms of the type in
-                    other cases.
-                </xsd:documentation>
-              </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="OCL">
-              <xsd:annotation>
-                <xsd:documentation>
-                  Indicates that the expression should be interpreted as an OCL constraint.
-                </xsd:documentation>
-              </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="Custom">
-              <xsd:annotation>
-                <xsd:documentation>
-                  Indicates that the expression is in some natural language, to be interpreted and implemented by humans.
-                </xsd:documentation>
-              </xsd:annotation>
-            </xsd:enumeration>
-          </xsd:restriction>
-        </xsd:simpleType>
-      </xsd:element>
-    </xsd:sequence>
-  </xsd:complexType>
 
 
-
-  <!-- Begin of element declarsion(s) -->
+  <!-- Begin of element declaration(s) -->
   <xsd:element name="model" type="Model">
     <xsd:annotation>
       <xsd:documentation>

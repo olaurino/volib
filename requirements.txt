@@ -1,4 +1,4 @@
-pyxb==1.2.3
+pyxb==1.2.4
 networkx
 furl
 jinja2

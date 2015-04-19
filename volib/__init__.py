@@ -2,11 +2,11 @@ __author__ = 'olaurino'
 
 __all__ = ['Resolver', 'resolvers', 'resolve', 'add_resolver', 'vodml', 'get_object', 'Context', 'get_context']
 
-import utypes
+import vodml_ref
 
 def utype_factory(utype):
     if isinstance(utype, basestring):
-        utype = utypes.UTYPE(utype)
+        utype = vodml_ref.VODML_REF(utype)
     return utype
 
 
