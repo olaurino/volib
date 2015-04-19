@@ -3,5 +3,4 @@ six
 networkx
 furl
 jinja2
-pytest-cov
 
