@@ -1,5 +1,5 @@
 from __future__ import print_function
-from six import with_metaclass
+from six import with_metaclass, iteritems
 
 __author__ = 'olaurino'
 
@@ -17,7 +17,7 @@ error = logger.error
 
 def get_fields(d, clazz):
     ret = {}
-    for k, v in d.iteritems():
+    for k, v in iteritems(d):
         if isinstance(v, clazz):
             ret[k] = v
     return ret
@@ -356,7 +356,7 @@ class EnumerationMeta(Singleton, ReferencableMeta, FinalChild):
                 else:
                     raise TypeError("Wrong value for Enum %s. Valid values: %s" % (name, cls.get_enums()))
 
-            for field, enum in cls._enums.iteritems():
+            for field, enum in iteritems(cls._enums):
                 if enum.value == value:
                     return enum
             else:
@@ -366,7 +366,7 @@ class EnumerationMeta(Singleton, ReferencableMeta, FinalChild):
 
         def get_enums():
             _str = ', '.join(
-                ['.'.join((name, field)) + ' or "' + enum.value + '"' for field, enum in cls._enums.iteritems()])
+                ['.'.join((name, field)) + ' or "' + enum.value + '"' for field, enum in iteritems(cls._enums)])
             return _str
 
         cls.get_enums = staticmethod(get_enums)
