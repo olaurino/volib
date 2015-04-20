@@ -1,55 +1,105 @@
 <?xml version="1.0"?>
-<VOTABLE version="1.2"
-         xmlns="http://www.ivoa.net/xml/VOTable/v1.2">
+<VOTABLE version="1.3_vodml"
+         xmlns="http://www.ivoa.net/xml/VOTable/v1.4b">
     <!-- VODML PREAMBLE. MUST BE DIRECT CHILD OF VOTABLE -->
     <!-- NOTE: VO-DML UTYPES (vo-dml:*) ONLY PERTAIN TO SERIALIZATION, NOT TO MODEL DEFINITION -->
-    <GROUP utype="vo-dml:Model">
-        <PARAM utype="vo-dml:Model.name" value="ref" datatype="char" arraysize="*" name="name"/>
-        <PARAM utype="vo-dml:Model.version" value="1.0" datatype="char" arraysize="*" name="version"/>
-        <PARAM utype="vo-dml:Model.url" value="file:ReferenceDM-1.0.vodml.xml" datatype="char" arraysize="*"
-               name="url"/>
-    </GROUP>
-    <GROUP utype="vo-dml:Model">
-        <PARAM utype="vo-dml:Model.name" value="ivoa" datatype="char" arraysize="*" name="name"/>
-        <PARAM utype="vo-dml:Model.version" value="1.0" datatype="char" arraysize="*" name="version"/>
-        <PARAM utype="vo-dml:Model.url" value="file:IVOA-1.0.vodml.xml" datatype="char" arraysize="*" name="url"/>
+    <GROUP>
+        <VODML>
+            <TYPE>vodml:Model</TYPE>
+        </VODML>
+        <PARAM value="ref" datatype="char" arraysize="*" name="name">
+            <VODML>
+                <ROLE>vodml:Model.name</ROLE>
+            </VODML>
+        </PARAM>
+        <PARAM value="1.0" datatype="char" arraysize="*" name="version">
+            <VODML>
+                <ROLE>vodml:Model.version</ROLE>
+            </VODML>
+        </PARAM>
+        <PARAM value="file:ReferenceDM-1.0.vodml.xml" datatype="char" arraysize="*" name="url">
+            <VODML>
+                <ROLE>vodml:Model.url</ROLE>
+            </VODML>
+        </PARAM>
     </GROUP>
 
     <PARAM ID="J2000" value="J2000" datatype="char" arraysize="*" name="j2000"/>
 
     <RESOURCE>
         <!-- DataType to GROUP in RESOURCE -->
-        <GROUP utype="vo-dml:Instance.root" ID="_icrs">
-            <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyCoordinateFrame" datatype="char"
-                   arraysize="*" name="type"/>
+        <GROUP ID="_icrs">
+            <VODML>
+                <ROLE>vodml:Instance.root</ROLE>
+                <TYPE>ref:source.stc.SkyCoordinateFrame</TYPE>
+            </VODML>
             <!-- Attribute to PARAM -->
-            <PARAM utype="ref:source.stc.SkyCoordinateFrame.name" value="ICRS" datatype="char" arraysize="*"
-                   name="name"/>
+            <PARAM value="ICRS" datatype="char" arraysize="*"
+                   name="name">
+                <VODML>
+                    <ROLE>ref:source.stc.SkyCoordinateFrame.name</ROLE>
+                </VODML>
+            </PARAM>
             <!-- Attribute to PARAMref -->
-            <PARAMref utype="ref:source.stc.SkyCoordinateFrame.equinox" ref="J2000"/>
+            <PARAMref ref="J2000">
+                <VODML>
+                    <ROLE>ref:source.stc.SkyCoordinateFrame.equinox</ROLE>
+                </VODML>
+            </PARAMref>
         </GROUP>
 
         <!-- DataType to GROUP in RESOURCE -->
-        <GROUP utype="vo-dml:Instance.root">
-            <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyCoordinate" datatype="char" arraysize="*"
-                   name="type"/>
-            <PARAM name="ra" utype="ref:source.stc.SkyCoordinate.longitude" value="123.00000" datatype="float"/>
-            <PARAM name="dec" utype="ref:source.stc.SkyCoordinate.latitude" value="-2.10000" datatype="float"/>
+        <GROUP>
+            <VODML>
+                <ROLE>vodml:Instance.root</ROLE>
+                <TYPE>ref:source.stc.SkyCoordinate</TYPE>
+            </VODML>
+
+            <PARAM name="ra" utype="" value="123.00000" datatype="float">
+                <VODML>
+                    <ROLE>ref:source.stc.SkyCoordinate.longitude</ROLE>
+                </VODML>
+            </PARAM>
+
+            <PARAM name="dec" value="-2.10000" datatype="float">
+                <VODML>
+                    <ROLE>ref:source.stc.SkyCoordinate.latitude</ROLE>
+                </VODML>
+            </PARAM>
+
             <!-- Attribute to GROUPref -->
-            <GROUP ref="_icrs" utype="ref:source.stc.SkyCoordinate.frame"/>
+            <GROUP ref="_icrs">
+                <VODML>
+                    <ROLE>ref:source.stc.SkyCoordinate.frame</ROLE>
+                </VODML>
+            </GROUP>
         </GROUP>
 
         <!-- ObjectType to GROUP in RESOURCE -->
         <!-- Collection (Composition) Container -->
         <GROUP utype="vo-dml:Instance.root">
-            <PARAM utype="vo-dml:Instance.type" value="ref:Catalog" datatype="char" arraysize="*" name="type"/>
-            <PARAM utype="ref:Catalog.name" value="My Catalog" datatype="char" arraysize="*" name="name"/>
-            <PARAM utype="ref:Catalog.description" value="My Description" datatype="char" arraysize="*"
-                   name="description"/>
-            <GROUP ID="CATALOG" utype="ref:Catalog.sources">
-                <PARAM utype="vo-dml:Instance.type" value="vo-dml:collection.Container" datatype="char" arraysize="*"
-                       name="type"/>
-                <GROUP ref="SOURCE" utype="vo-dml:collection.Container.itemID"/>
+            <VODML>
+                <ROLE>vodml:Instance.root</ROLE>
+                <TYPE>ref:Catalog</TYPE>
+            </VODML>
+
+            <PARAM value="My Catalog" datatype="char" arraysize="*" name="name">
+                <VODML>
+                    <ROLE>ref:Catalog.name</ROLE>
+                </VODML>
+            </PARAM>
+
+            <PARAM value="My Description" datatype="char" arraysize="*" name="description">
+                <VODML>
+                    <ROLE>ref:Catalog.description</ROLE>
+                </VODML>
+            </PARAM>
+
+            <GROUP ID="CATALOG">
+                <VODML>
+                    <ROLE>ref:Catalog.sources</ROLE>
+                    <TYPE>vodml:Collection</TYPE>
+                </VODML>
             </GROUP>
         </GROUP>
 
@@ -59,26 +109,59 @@
             <!-- Inheritance, although for extensions in the same model parent might be omitted -->
             <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyError" datatype="char" arraysize="*"
                    name="type"/>
-            <FIELDref ref="_error_radius" utype="ref:source.stc.CircleError.radius" />
+            <FIELDref ref="_error_radius" utype="ref:source.stc.CircleError.radius"/>
         </GROUP>
 
         <TABLE>
-            <GROUP utype="vo-dml:Instance.root" ID="SOURCE">
-                <PARAM utype="vo-dml:Instance.type" value="ref:source.Source" datatype="char" arraysize="*"
-                       name="type"/>
-                <!-- Collection (Composition) Contained TODO Container may Probably be ignored for the time being -->
-                <GROUP ref="CATALOG" utype="vo-dml:collection.Container.ID"/>
-                <FIELDref ref="_designation" utype="ref:source.Source.name"/>
+            <GROUP ID="SOURCE">
+                <VODML>
+                    <ROLE>vodml:Collection.item</ROLE>
+                    <TYPE>ref:source.Source</TYPE>
+                </VODML>
+
+                <GROUP ref="CATALOG">
+                    <VODML>
+                        <ROLE>vodml:Collection.parent</ROLE>
+                    </VODML>
+                </GROUP>
+
+                <FIELDref ref="_designation">
+                    <VODML>
+                        <ROLE>ref:source.Source.name</ROLE>
+                    </VODML>
+                </FIELDref>
+
                 <!-- Attribute to GROUP in GROUP -->
-                <GROUP utype="ref:source.Source.position">
-                    <PARAM utype="vo-dml:Instance.type" value="ref:source.stc.SkyCoordinate" datatype="char"
-                           arraysize="*"
-                           name="type"/>
-                    <FIELDref ref="_ra" utype="ref:source.stc.SkyCoordinate.longitude"/>
-                    <FIELDref ref="_dec" utype="ref:source.stc.SkyCoordinate.latitude"/>
-                    <GROUP ref="_icrs" utype="ref:source.stc.SkyCoordinate.frame"/>
+                <GROUP>
+                    <VODML>
+                        <ROLE>ref:source.Source.position</ROLE>
+                        <TYPE>ref:source.stc.SkyCoordinate</TYPE>
+                    </VODML>
+
+                    <FIELDref ref="_ra">
+                        <VODML>
+                            <ROLE>ref:source.stc.SkyCoordinate.longitude</ROLE>
+                        </VODML>
+                    </FIELDref>
+
+                    <FIELDref ref="_dec">
+                        <VODML>
+                            <ROLE>ref:source.stc.SkyCoordinate.latitude</ROLE>
+                        </VODML>
+                    </FIELDref>
+
+                    <GROUP ref="_icrs" utype="">
+                        <VODML>
+                            <ROLE>ref:source.stc.SkyCoordinate.frame</ROLE>
+                        </VODML>
+                    </GROUP>
+
                     <!-- Reference to ObjectType -->
-                    <GROUP ref="_error" utype="ref:source.stc.SkyCoordinate.error"/>
+                    <GROUP ref="_error">
+                        <VODML>
+                            <ROLE>ref:source.stc.SkyCoordinate.error</ROLE>
+                        </VODML>
+                    </GROUP>
                 </GROUP>
             </GROUP>
             <FIELD ID="_designation" datatype="char" name="name" arraysize="*"/>
