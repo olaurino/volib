@@ -43,6 +43,7 @@ setup(name='volib',
       ],
       tests_require=[
 	      'pytest-cov',
+          'mock',
       ],
       cmdclass={'test': PyTest},
       entry_points="""
